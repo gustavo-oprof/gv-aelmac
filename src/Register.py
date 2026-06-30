@@ -2,10 +2,9 @@
 from PyQt6 import QtWidgets
 
 from src.Boxes import show_box
-from controller.RegisterController import RegisterController
+from controller.LoginController import LoginController
 
-controller = RegisterController()
-controller.create()
+controller = LoginController()
 
 
 def create(window):
@@ -23,32 +22,22 @@ def create(window):
         )
 
     else:
-        if password != window.txt_confirm.text().strip():
+        if window.txt_password.text().strip() != window.txt_confirm.text().strip():
             show_box('ERRO', 'As senhas não coincidem.')
 
         else:
-            verification = controller.select(user)
+            controller.insert(user, password, level)
 
-            if verification:
-                show_box(
-                    'ERRO',
-                    '''Já existe um usuário com este nome.
-                    \nPor favor, escolha outro nome.'''
-                )
+            choice = show_box(
+                'SELEÇÃO',
+                'Deseja retornar para a tela de login?'
+            )
 
-            else:
-                controller.insert(user, password, level)
+            if choice == 'yes':
+                from view.LoginWindow import Ui_MainWindow
+                this_window.close()
 
-                choice = show_box(
-                    'SELEÇÃO',
-                    'Deseja retornar para a tela de login?'
-                )
-
-                if choice == 'yes':
-                    from view.LoginWindow import Ui_MainWindow
-                    this_window.close()
-
-                    window.Login = QtWidgets.QMainWindow()
-                    window.ui = Ui_MainWindow()
-                    window.ui.setupUi(window.Login)
-                    window.Login.show()
+                window.Login = QtWidgets.QMainWindow()
+                window.ui = Ui_MainWindow()
+                window.ui.setupUi(window.Login)
+                window.Login.show()

@@ -5,6 +5,7 @@ from src.Boxes import show_box
 from controller.LoginController import LoginController
 
 controller = LoginController()
+controller.create()
 controller.reset_status()
 
 def create(window):
@@ -19,12 +20,12 @@ def create(window):
 
 
 def login(window):
-    from controller.LoginController import LoginController
     this_window = QtWidgets.QApplication.activeWindow()
 
     user = window.txt_user.text().strip()
     password = window.txt_password.text().strip()
-    response = LoginController().login(user, password)
+    
+    response = controller.login(user, password)
 
     if response == 'USER NOT FOUND':
         show_box('ERRO', 'O usuário informado não existe.')

@@ -4,6 +4,7 @@ import platform
 from shutil import copyfile
 from PyQt6 import QtGui, QtWidgets
 
+
 from src.Boxes import show_box
 from model.AppModel import AppModel
 from controller.AppController import AppController
@@ -71,7 +72,7 @@ def validate_fields(model):
     return True
 
 
-def handle_navigation(window, status, mode):
+def handle_navigation(window, status, mode=None):
     if status:
         window.tab_voluntary.setEnabled(False)
         window.tab_company.setEnabled(False)
@@ -185,17 +186,12 @@ def btn_cancel_clicked(window):
 
 
 def btn_save_clicked(window):
-    import random
-    import string
     import datetime
-
     date = datetime.datetime.now().strftime('%d/%m/%Y')
-    model.unique_id = ''.join(
-        random.choices(
-            string.ascii_lowercase + string.digits, k=16
-        )
-    )
 
+    from src.Crypt import hash_query
+    model.unique_id = hash_query(window.txt_name.text().strip().upper())
+    
     model.name = window.txt_name.text().strip().upper()
     model.father = window.txt_father.text()
     model.mother = window.txt_mother.text()
@@ -297,8 +293,7 @@ def btn_delete_clicked(window):
 
 def btn_search_clicked(window):
     if window.txt_search.text().strip() == '':
-        report_controller.gen_xlsx()
-
+        show_box('ATENÇÃO', 'Digite um termo para realizar a pesquisa')
     else:
         app_controller.id_search(window.txt_search.text().strip().upper())
 

@@ -10,7 +10,7 @@ class Connection:
 
     def create_connection(self):
         conn = None
-        db_file = 'database.db'
+        db_file = 'voluntarios_database.db'
         try:
             conn = sql.connect(db_file)
             return conn

@@ -751,8 +751,7 @@ class Ui_MainWindow(object):
         self.txt_search = QtWidgets.QLineEdit(self.centralwidget)
         self.txt_search.setToolTip('')
         self.txt_search.setText('')
-        self.txt_search.setPlaceholderText(
-            'Digite um nome para pesquisar seu ID ou deixe vazio para gerar uma lista com todos os voluntários')
+        self.txt_search.setPlaceholderText('Digite um nome para pesquisar seu ID')
         self.txt_search.setObjectName('txt_search')
         self.gridLayout.addWidget(self.txt_search, 0, 0, 1, 2)
         self.btn_delete = QtWidgets.QPushButton(self.centralwidget)
