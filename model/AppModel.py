@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-
 class AppModel:
-    def __init__(self, unique_id=None, registered=None, name=None, father=None, mother=None, address=None, number=None, complement=None, neighbourhood=None, city=None, state=None, postal_code=None, home_phone=None, mobile_phone=None, course=None, cpf=None, rg=None, emitter=None, home_town=None, home_state=None, birth_date=None, civil_state=None, gender=None, scholarship=None, email=None, company_name=None, company_time=None, ocupation=None, company_address=None, company_neighbourhood=None, company_number=None, company_city=None, company_state=None, company_postal_code=None, company_phone=None):
+    def __init__(self, unique_id=None, registered=None, name=None, father=None, mother=None, address=None, number=None, complement=None, neighbourhood=None, city=None, state=None, postal_code=None, home_phone=None, mobile_phone=None, course=None, cpf=None, home_town=None, home_state=None, birth_date=None, civil_state=None, gender=None, scholarship=None, email=None, company_name=None, company_time=None, ocupation=None, company_address=None, company_neighbourhood=None, company_number=None, company_city=None, company_state=None, company_postal_code=None, company_phone=None):
         self._unique_id = unique_id
         self._registered = registered
         self._name = name
@@ -17,8 +16,6 @@ class AppModel:
         self._home_phone = home_phone
         self._mobile_phone = mobile_phone
         self._cpf = cpf
-        self._rg = rg
-        self._emitter = emitter
         self._home_town = home_town
         self._home_state = home_state
         self._birth_date = birth_date
@@ -157,22 +154,6 @@ class AppModel:
     @cpf.setter
     def cpf(self, Cpf):
         self._cpf = Cpf
-
-    @property
-    def rg(self):
-        return self._rg
-
-    @rg.setter
-    def rg(self, Rg):
-        self._rg = Rg
-
-    @property
-    def emitter(self):
-        return self._emitter
-
-    @emitter.setter
-    def emitter(self, Emitter):
-        self._emitter = Emitter
 
     @property
     def home_town(self):

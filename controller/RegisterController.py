@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-import tkinter
-from Connection import Connection
-from tkinter import messagebox
+from src.Boxes import show_box
+from src.Connection import Connection
 
 db = Connection()
 
@@ -21,10 +20,7 @@ class RegisterController:
             cursor = conn.cursor()
             cursor.execute(create_table_string)
         except Exception as e:
-            root = tkinter.Tk()
-            root.withdraw()
-            messagebox.showerror('ERRO', e)
-            tkinter.Tk().destroy()
+            show_box('ERRO', e)
 
         finally:
             db.close_connection()
@@ -39,16 +35,10 @@ class RegisterController:
 
             cursor.execute(query_string)
             conn.commit()
-            
-            root = tkinter.Tk()
-            root.withdraw()
-            messagebox.showinfo('SUCESSO', 'Usuário criado com sucesso!')
-            tkinter.Tk().destroy()
+            show_box('SUCESSO', 'Usuário criado com sucesso!')
+
         except Exception as e:
-            root = tkinter.Tk()
-            root.withdraw()
-            messagebox.showerror('ERRO', e)
-            tkinter.Tk().destroy()
+            show_box('ERRO', e)
 
         finally:
             db.close_connection()
@@ -66,10 +56,7 @@ class RegisterController:
                 return False
 
         except Exception as e:
-            root = tkinter.Tk()
-            root.withdraw()
-            messagebox.showerror('ERRO', e)
-            tkinter.Tk().destroy()
+            show_box('ERRO', e)
         
         finally:
             db.close_connection()

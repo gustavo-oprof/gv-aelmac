@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-import tkinter
-from tkinter import messagebox
-from Connection import Connection
+from src.Boxes import show_box
+from src.Connection import Connection
 
 db = Connection()
 
 
-class LoginController:
+class LoginController():
     def create(self):
         try:
             create_table_string = '''CREATE TABLE IF NOT EXISTS users (
@@ -21,10 +20,7 @@ class LoginController:
             cursor = conn.cursor()
             cursor.execute(create_table_string)
         except Exception as e:
-            root = tkinter.Tk()
-            root.withdraw()
-            messagebox.showerror('ERRO', e)
-            tkinter.Tk().destroy()
+            show_box('ERRO', e)
 
         finally:
             db.close_connection()
@@ -47,10 +43,22 @@ class LoginController:
                 return 'OK'
                 
         except Exception as e:
-            root = tkinter.Tk()
-            root.withdraw()
-            messagebox.showerror('ERRO', e)
-            tkinter.Tk().destroy()
+            show_box('ERRO', e)
+
+
+        finally:
+            db.close_connection()
+
+    def get_access_level(self):
+        try:
+            conn = db.create_connection()
+            cursor = conn.cursor()
+            level = cursor.execute('SELECT level FROM users WHERE status = \'ON\'').fetchone()[0]
+
+            return level
+
+        except Exception as e:
+            show_box('ERRO', e)
 
         finally:
             db.close_connection()
@@ -59,15 +67,11 @@ class LoginController:
         try:
             conn = db.create_connection()
             cursor = conn.cursor()
-            cursor.execute('UPDATE users SET status = \'OFF\' WHERE status = \'ON\'')
-            conn.commit()
-            
+            cursor.execute('UPDATE users SET status = \'OFF\'')
+            conn.commit()          
                 
         except Exception as e:
-            root = tkinter.Tk()
-            root.withdraw()
-            messagebox.showerror('ERRO', e)
-            tkinter.Tk().destroy()
+            show_box('ERRO', e)
 
         finally:
             db.close_connection()

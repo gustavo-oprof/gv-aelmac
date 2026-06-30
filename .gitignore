@@ -1,4 +1,5 @@
 .venv/
+venv/
 .vscode/
 UIs/
 dist/
@@ -6,3 +7,4 @@ build/
 __pycache__/
 *.db
 assets/pictures/
+*.log

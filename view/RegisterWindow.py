@@ -1,59 +1,11 @@
 # -*- coding: utf-8 -*-
-import tkinter
-from tkinter import messagebox
-from PyQt5 import QtCore, QtGui, QtWidgets
-from RegisterController import RegisterController
+from PyQt6 import QtCore, QtGui, QtWidgets
 
-controller = RegisterController()
+
+from src import Register
 
 
 class Ui_MainWindow(object):
-    def btn_create_clicked(self):
-        this_window = QtWidgets.QApplication.activeWindow()
-        
-        user = self.txt_user.text().strip()
-        password = self.txt_password.text().strip()
-        level = self.cmb_level.currentText()
-
-        if len(password) < 8:
-            root = tkinter.Tk()
-            root.withdraw()
-            messagebox.showerror('ERRO', 'A senha digitada é muito pequena.\nDigite uma senha com ao menos 8 caracteres.')
-            tkinter.Tk().destroy()
-        
-        else:
-            if password != self.txt_confirm.text().strip():
-                root = tkinter.Tk()
-                root.withdraw()
-                messagebox.showerror('ERRO', 'As senhas não coincidem.')
-                tkinter.Tk().destroy()
-            
-            else:
-                verification = controller.select(user)
-                
-                if verification:
-                    root = tkinter.Tk()
-                    root.withdraw()
-                    messagebox.showerror('ERRO', 'Já existe um usuário com este nome.\nPor favor, escolha outro nome.')
-                    tkinter.Tk().destroy()
-
-                else:
-                    controller.insert(user, password, level)
-
-                    root = tkinter.Tk()
-                    root.withdraw()
-                    choice = messagebox.askquestion('RETORNAR PARA TELA DE LOGIN', 'Deseja retornar para a tela de login?')
-                    tkinter.Tk().destroy()
-
-                    if choice == 'yes':
-                        from Login import Ui_MainWindow
-                        this_window.close()
-
-                        self.Login = QtWidgets.QMainWindow()
-                        self.ui = Ui_MainWindow()
-                        self.ui.setupUi(self.Login)
-                        self.Login.show()
-
     def setupUi(self, MainWindow):
         MainWindow.setObjectName('MainWindow')
         MainWindow.resize(541, 484)
@@ -63,25 +15,29 @@ class Ui_MainWindow(object):
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName('gridLayout')
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.label_3.sizePolicy().hasHeightForWidth())
         self.label_3.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
-        font.setWeight(75)
         self.label_3.setFont(font)
         self.label_3.setText('USUÁRIO')
-        self.label_3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading |
+                                  QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
         self.label_3.setObjectName('label_3')
         self.gridLayout.addWidget(self.label_3, 0, 0, 1, 1)
         self.txt_user = QtWidgets.QLineEdit(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.txt_user.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.txt_user.sizePolicy().hasHeightForWidth())
         self.txt_user.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -90,80 +46,92 @@ class Ui_MainWindow(object):
         self.txt_user.setObjectName('txt_user')
         self.gridLayout.addWidget(self.txt_user, 1, 0, 1, 1)
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.label_4.sizePolicy().hasHeightForWidth())
         self.label_4.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
-        font.setWeight(75)
         self.label_4.setFont(font)
         self.label_4.setText('SENHA')
-        self.label_4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_4.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading |
+                                  QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
         self.label_4.setObjectName('label_4')
         self.gridLayout.addWidget(self.label_4, 2, 0, 1, 1)
         self.txt_password = QtWidgets.QLineEdit(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.txt_password.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.txt_password.sizePolicy().hasHeightForWidth())
         self.txt_password.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.txt_password.setFont(font)
         self.txt_password.setText('')
         self.txt_password.setPlaceholderText('Ao menos 8 caracteres')
-        self.txt_password.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.txt_password.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.txt_password.setObjectName('txt_password')
         self.gridLayout.addWidget(self.txt_password, 3, 0, 1, 1)
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_5.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.label_5.sizePolicy().hasHeightForWidth())
         self.label_5.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
-        font.setWeight(75)
         self.label_5.setFont(font)
         self.label_5.setText('CONFIRMAR SENHA')
-        self.label_5.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_5.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading |
+                                  QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
         self.label_5.setObjectName('label_5')
         self.gridLayout.addWidget(self.label_5, 4, 0, 1, 1)
         self.txt_confirm = QtWidgets.QLineEdit(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.txt_confirm.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.txt_confirm.sizePolicy().hasHeightForWidth())
         self.txt_confirm.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.txt_confirm.setFont(font)
         self.txt_confirm.setText('')
-        self.txt_confirm.setEchoMode(QtWidgets.QLineEdit.Password)
-        self.txt_confirm.setPlaceholderText('Repita a senha para verificação de erros')
+        self.txt_confirm.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+        self.txt_confirm.setPlaceholderText(
+            'Repita a senha para verificação de erros')
         self.txt_confirm.setObjectName('txt_confirm')
         self.gridLayout.addWidget(self.txt_confirm, 5, 0, 1, 1)
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_6.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.label_6.sizePolicy().hasHeightForWidth())
         self.label_6.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
-        font.setWeight(75)
         self.label_6.setFont(font)
         self.label_6.setText('NÍVEL DE ACESSO')
-        self.label_6.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_6.setAlignment(QtCore.Qt.AlignmentFlag.AlignLeading |
+                                  QtCore.Qt.AlignmentFlag.AlignLeft | QtCore.Qt.AlignmentFlag.AlignVCenter)
         self.label_6.setObjectName('label_6')
         self.gridLayout.addWidget(self.label_6, 6, 0, 1, 1)
         self.cmb_level = QtWidgets.QComboBox(self.centralwidget)
-        self.cmb_level.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.cmb_level.setCursor(QtGui.QCursor(
+            QtCore.Qt.CursorShape.PointingHandCursor))
         self.cmb_level.setToolTip('<html><head/><body><p><span style=\' font-weight:600;\'>COMUM</span>: Pode apenas ver e imprimir registros;</p><p><span style=\' font-weight:600;\'>GERENTE</span>: Pode ver, adicionar, editar e imprimir registros;</p><p><span style=\' font-weight:600;\'>ADMINISTRADOR</span>: Todas as operações disponíveis.</p></body></html>')
         self.cmb_level.setObjectName('cmb_level')
         self.cmb_level.addItem('')
@@ -177,18 +145,16 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
-        font.setWeight(75)
         self.btn_create.setFont(font)
-        self.btn_create.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.btn_create.setCursor(QtGui.QCursor(
+            QtCore.Qt.CursorShape.PointingHandCursor))
         self.btn_create.setText('CRIAR USUÁRIO')
         self.btn_create.setObjectName('btn_create')
         self.gridLayout.addWidget(self.btn_create, 8, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
 
-        self.btn_create.clicked.connect(self.btn_create_clicked)
-        controller.create()
-
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.btn_create.clicked.connect(lambda: Register.create(self))
 
 
 if __name__ == '__main__':
@@ -198,4 +164,4 @@ if __name__ == '__main__':
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
