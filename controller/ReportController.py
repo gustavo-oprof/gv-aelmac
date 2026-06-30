@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import platform
+import subprocess
 from pypdf import PdfReader, PdfWriter
 
 from src.Crypt import decrypt
@@ -26,6 +27,8 @@ class ReportController:
                     'Documents'
                 )
 
+                template = template.replace('/','\\')
+
             conn = db.create_connection()
             cursor = conn.cursor()
             result = cursor.execute(f'SELECT * FROM voluntaries WHERE id = {index}').fetchone()
@@ -44,13 +47,26 @@ class ReportController:
             )
 
             os.makedirs(path, exist_ok=True)
-            writer.write(f'{path}/Contrato_de_' + result[3].replace(' ','_') + '.pdf')
 
-            show_box('SUCESSO', 'Contrato de voluntariado gerado com sucesso!')
+            path = f'{path}/Contrato_de_{result[3].replace(' ', '_')}.pdf'
+            if platform.system() == 'Windows':
+                path = path.replace('/', '\\' )
+            
+            writer.write(path)
+
+            choice = show_box(
+                'SELEÇÃO',
+                'Contrato de voluntariado gerado com sucesso!\nAbrir o contrato?'
+            )
+
+            if choice == 'yes':
+                if platform.system() == 'Windows':
+                    os.startfile(path)
+                else:
+                    subprocess.run(['xdg-open', path])
 
         except Exception as e:
             show_box('ERRO', e)
 
         finally:
             db.close_connection()
-

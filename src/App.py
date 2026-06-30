@@ -126,6 +126,8 @@ def handle_fields(window, action):
                 if os.path.exists(path):
                     image = QtGui.QPixmap(path)
                     window.pic_box.setPixmap(image)
+                else:
+                    window.pic_box.clear()
             except:
                 pass
 
@@ -262,12 +264,17 @@ def btn_save_clicked(window):
                     path = './assets/pictures' if platform.system() == 'Linux' else '.\\assets\\pictures'
                     os.makedirs(path, exist_ok=True)
 
+                    path = f'{path}/{model.unique_id}.jpg'
+
+                    if platform.system() == 'Windows':
+                        path = path.replace('/', '\\')
+
                     copyfile(
                         file[0],
-                        f'{path}/{model.unique_id}.jpg'
+                        path
                     )
 
-                    image = QtGui.QPixmap(f'{path}/{model.unique_id}.jpg')
+                    image = QtGui.QPixmap(path)
                     window.pic_box.setPixmap(image)
 
                     show_box(
